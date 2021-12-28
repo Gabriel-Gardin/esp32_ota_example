@@ -14,8 +14,12 @@
 
 //esp_https_ota_config_t
 
+/*Exemplo simples de ataualização OTA usando uma comunicação HTTPS e autenticação via Token Usando o django rest-framework.
+O certificado a ser usado é o certificado da autoridade certificadora. 
+Note que o certificado e o token tem um prazo de valdiade e tem que ser atualizados periodicamente para garantir o funcionamento do equipamento.
+*/
 
-extern const uint8_t server_cert_pem_start[] asm("_binary_cert_pem_start");
+extern const uint8_t server_cert_pem_start[] asm("_binary_cert_pem_start");  //Certificado da autoridade de TLS usado pelo seu site
 extern const uint8_t server_cert_pem_end[] asm("_binary_cert_pem_end");
 
 static const char *TAG = "HTTPS_OTA_API";
@@ -24,9 +28,11 @@ static esp_err_t _http_client_init_cb(esp_http_client_handle_t http_client)
 {
     esp_err_t err = ESP_OK;
     /* Uncomment to add custom headers to HTTP request */
-    // err = esp_http_client_set_header(http_client, "Custom-Header", "Value");
+    err = esp_http_client_set_header(http_client, "Authorization", "Token d119e8f35ca6bd0ab7e2e8ace3681323c4786e5a"); //Token d119e8f35ca6bd0ab7e2e8ace3681323c4786e5a
+
     return err;
 }
+//Basic Z2FyZGluOjEyM2FzZDQ1Ng==
 
 void ota_task(void *pvParameter)
 {
@@ -38,7 +44,7 @@ void ota_task(void *pvParameter)
         .cert_pem = (char *)server_cert_pem_start,
         .timeout_ms = OTA_RECV_TIMEOUT,
         .keep_alive_enable = true,
-        .skip_cert_common_name_check = true,
+        .skip_cert_common_name_check = false,
     };
 
     esp_https_ota_config_t ota_config = {

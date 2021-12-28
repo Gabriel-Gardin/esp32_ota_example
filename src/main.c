@@ -12,12 +12,15 @@
 static const char TAG[] = "Main app";
 
 
+/*Simples exemplo de provisionamento de credenciais Wi-Fi e atualização OTA via https*/
+
+
 
 void main_task(void *PvParmeters)
 {
     for(;;)
     {
-        ESP_LOGI(TAG, "Firmware novo");
+        ESP_LOGI(TAG, "Firmware antigasso");
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
@@ -35,11 +38,11 @@ void app_main()
         ESP_ERROR_CHECK(nvs_flash_init());
     }
 
+    xTaskCreatePinnedToCore(main_task, "main_task", 8192, NULL, 1, NULL, 1);
+
     if(start_wifi_or_provisioning() != ESP_OK){
         ESP_LOGE(TAG, "Erro ao inicializar o wifi provisioning");
     }
-
-    xTaskCreatePinnedToCore(main_task, "main_task", 8192, NULL, 1, NULL, 1);
 
     vTaskDelay(pdMS_TO_TICKS(5000));
     start_ota_update();

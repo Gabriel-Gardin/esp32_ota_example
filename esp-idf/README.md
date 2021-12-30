@@ -15,7 +15,7 @@ _Security features -> Enable flash encryption on boot._
 __Note__: É importante desabilitar está opção se não for trabalhar com imagens criptografadas.
 
 
-
+__Observação__: Ainda é possível gravar e bootar imagens não criptografadas pela atualização OTA, mas, pelo UART não(e jtag???)
 
 ESP-IDF version: v4.3.2
 

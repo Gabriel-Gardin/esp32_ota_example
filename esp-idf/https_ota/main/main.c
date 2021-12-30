@@ -20,7 +20,7 @@ void main_task(void *PvParmeters)
 {
     for(;;)
     {
-        ESP_LOGI(TAG, "Firmware antigasso");
+        ESP_LOGI(TAG, "Firmware antigoooo");
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }

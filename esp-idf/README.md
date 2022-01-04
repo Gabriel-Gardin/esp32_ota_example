@@ -15,7 +15,7 @@ _Security features -> Enable flash encryption on boot._
 __Note__: É importante desabilitar está opção se não for trabalhar com imagens criptografadas.
 
 
-__Observação__: Ainda é possível gravar e bootar imagens não criptografadas pela atualização OTA, mas, pelo UART não(e jtag???)
+__Observação__: Ainda é possível gravar e bootar imagens não criptografadas pela atualização OTA, mas, pela UART e JTAG apenas firmware criptografados.
 
 ESP-IDF version: v4.3.2
 
@@ -34,9 +34,14 @@ idf.py fullclean
 idf.py encrypted-flash monitor
 ```
 
-
-## Gravando a versão não criptografada
+## Gerando uma chave
 
 ```bash
-idf.py flash monitor
+python espsecure.py generate_flash_encryption_key key.bin
+```
+
+## Gravando a chave encriptografada
+
+```bash
+python espefuse.py --port /dev/ttyUSB0 burn_key flash_encryption key.bin
 ```

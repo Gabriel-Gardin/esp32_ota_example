@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "wifi_provisioning_api.h": "c"
+        "wifi_provisioning_api.h": "c",
+        "nvs_flash.h": "c"
     }
 }

@@ -11,14 +11,11 @@
 
 static const char TAG[] = "Main app";
 
-
 /*Simples exemplo de provisionamento de credenciais Wi-Fi e atualização OTA via https*/
-
-
 
 void main_task(void *PvParmeters)
 {
-    for(;;)
+    for (;;)
     {
         ESP_LOGI(TAG, "Firmware antigassoooooooooooooooooooooo");
         vTaskDelay(pdMS_TO_TICKS(1000));
@@ -27,9 +24,10 @@ void main_task(void *PvParmeters)
 
 void app_main()
 {
-        /* Initialize NVS partition */
+    /* Initialize NVS partition */
     esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND)
+    {
         /* NVS partition was truncated
          * and needs to be erased */
         ESP_ERROR_CHECK(nvs_flash_erase());
@@ -40,7 +38,8 @@ void app_main()
 
     xTaskCreatePinnedToCore(main_task, "main_task", 8192, NULL, 1, NULL, 1);
 
-    if(start_wifi_or_provisioning() != ESP_OK){
+    if (start_wifi_or_provisioning() != ESP_OK)
+    {
         ESP_LOGE(TAG, "Erro ao inicializar o wifi provisioning");
     }
 

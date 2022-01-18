@@ -15,10 +15,16 @@ static const char TAG[] = "Main app";
 
 void main_task(void *PvParmeters)
 {
+    uint32_t count = 0;
     for (;;)
     {
-        ESP_LOGI(TAG, "Firmware antigassoooooooooooooooooooooo");
+        count++;
+        ESP_LOGI(TAG, "Firmware velho que funciona");
         vTaskDelay(pdMS_TO_TICKS(1000));
+        if (count == 15)
+        {
+            start_ota_update();
+        }
     }
 }
 
@@ -36,13 +42,10 @@ void app_main()
         ESP_ERROR_CHECK(nvs_flash_init());
     }
 
-    xTaskCreatePinnedToCore(main_task, "main_task", 8192, NULL, 1, NULL, 1);
-
     if (start_wifi_or_provisioning() != ESP_OK)
     {
         ESP_LOGE(TAG, "Erro ao inicializar o wifi provisioning");
     }
 
-    vTaskDelay(pdMS_TO_TICKS(5000));
-    start_ota_update();
+    xTaskCreatePinnedToCore(main_task, "main_task", 8192, NULL, 1, NULL, 1);
 }
